@@ -4,7 +4,7 @@ Views:
 -   name: Summary List
     displayname: Summary List
     viewname: summarylist
-    displaytype: datatable
+    displaytype: datatable_serverbig
     parameters:
         filename: nf_output/output.tsv
         columns:
@@ -16,4 +16,6 @@ Views:
                 data: Dataset
             -   title: "Cosine"
                 data: Cosine
+            -   title: "Delta Mass"
+                data: "Delta Mass"
             

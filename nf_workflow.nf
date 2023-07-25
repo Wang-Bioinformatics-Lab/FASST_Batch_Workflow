@@ -3,6 +3,9 @@ nextflow.enable.dsl=2
 
 params.usi_field = "mzspec:GNPS:GNPS-LIBRARY:accession:CCMSLIB00005436077"
 
+// Parameters
+params.analog = "No"
+
 TOOL_FOLDER = "$baseDir/bin"
 
 // Boilerplate for GNPS2
@@ -37,7 +40,8 @@ process searchFASST {
     file 'output.tsv'
 
     """
-    python $TOOL_FOLDER/masst_client.py $input output.tsv
+    python $TOOL_FOLDER/masst_client.py $input output.tsv \
+    --analog ${params.analog}
     """
 }
 

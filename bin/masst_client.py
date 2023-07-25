@@ -50,9 +50,15 @@ def main():
     parser.add_argument('output_file', help='output_file')
     parser.add_argument('--masst_type', help='Type of MASST to give youresults: gnpsdata, microbemasst', default="masst")
     parser.add_argument('--database', help='Type database to actually search', default="gnpsdata_index")
+    parser.add_argument('--analog', help='Perform Yes or No', default="No")
     args = parser.parse_args()
 
-    output_results_df = masst_query_all(pd.read_csv(args.input_file)["usi"], args.database, args.masst_type)
+    analog_boolean = args.analog == "Yes"
+
+    output_results_df = masst_query_all(pd.read_csv(args.input_file)["usi"], 
+                                        args.database, args.masst_type, 
+                                        analog=analog_boolean)
+                                        
     output_results_df.to_csv(args.output_file, index=False, sep="\t")
 
 if __name__ == '__main__':

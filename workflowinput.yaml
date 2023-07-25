@@ -27,3 +27,13 @@ parameterlist:
       formvalue: ""
       rows: 4
       cols: 50
+
+    - displayname: Analog Search
+      paramtype: select
+      nf_paramname: analog
+      formvalue: "No"
+      options:
+        - value: "Yes"
+          display: "Yes"
+        - value: "No"
+          display: "No"
