@@ -25,23 +25,25 @@ process prepData {
     """
 }
 
-// process processData {
-//     publishDir "./nf_output", mode: 'copy'
+process searchFASST {
+    publishDir "./nf_output", mode: 'copy'
 
-//     conda "$TOOL_FOLDER/conda_env.yml"
+    conda "$TOOL_FOLDER/conda_env.yml"
 
-//     input:
-//     file input 
+    input:
+    file input 
 
-//     output:
-//     file 'output.tsv'
+    output:
+    file 'output.tsv'
 
-//     """
-//     python $TOOL_FOLDER/script.py $input output.tsv
-//     """
-// }
+    """
+    python $TOOL_FOLDER/masst_client.py $input output.tsv
+    """
+}
 
 workflow {
     input_parameters_ch = Channel.fromPath(params.input_gnps2_parameters)
-    prepData(input_parameters_ch)
+    usi_to_search_ch = prepData(input_parameters_ch)
+
+    searchFASST(usi_to_search_ch)
 }
