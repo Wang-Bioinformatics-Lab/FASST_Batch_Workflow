@@ -51,6 +51,10 @@ def main():
     parser.add_argument('--masst_type', help='Type of MASST to give youresults: gnpsdata, microbemasst', default="masst")
     parser.add_argument('--database', help='Type database to actually search', default="gnpsdata_index")
     parser.add_argument('--analog', help='Perform Yes or No', default="No")
+    parser.add_argument('--precursor_tolerance', help='precursor_tolerance', default=0.02, type=float)
+    parser.add_argument('--fragment_tolerance', help='fragment_tolerance', default=0.02, type=float)
+    parser.add_argument('--cosine', help='cosine', default=0.7, type=float)
+
     args = parser.parse_args()
 
     analog_boolean = args.analog == "Yes"

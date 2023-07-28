@@ -7,7 +7,7 @@ workflowautohide: false
 adminonly: false
 #This maps the parameters from an input form to those that will appear in nextflow
 parameterlist:
-    - displayname: File Selection
+    - displayname: Data Selection
       paramtype: section
 
     # - displayname: Input Data Folder
@@ -28,6 +28,9 @@ parameterlist:
       rows: 4
       cols: 50
 
+    - displayname: Search Parameters
+      paramtype: section
+
     - displayname: Analog Search
       paramtype: select
       nf_paramname: analog
@@ -37,3 +40,27 @@ parameterlist:
           display: "Yes"
         - value: "No"
           display: "No"
+
+    - displayname: Precursor Tolerance
+      paramtype: select
+      nf_paramname: precursor_tolerance
+      formvalue: "0.02"
+      options:
+        - value: "0.02"
+          display: "0.02"
+
+    - displayname: Fragment Tolerance
+      paramtype: select
+      nf_paramname: fragment_tolerance
+      formvalue: "0.02"
+      options:
+        - value: "0.02"
+          display: "0.02"
+
+    - displayname: Minium Cosine
+      paramtype: select
+      nf_paramname: cosine
+      formvalue: "0.7"
+      options:
+        - value: "0.7"
+          display: "0.7"

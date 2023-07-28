@@ -5,6 +5,9 @@ params.usi_field = "mzspec:GNPS:GNPS-LIBRARY:accession:CCMSLIB00005436077"
 
 // Parameters
 params.analog = "No"
+params.precursor_tolerance = "0.02"
+params.fragment_tolerance = "0.02"
+params.cosine = "0.7"
 
 TOOL_FOLDER = "$baseDir/bin"
 
@@ -41,7 +44,10 @@ process searchFASST {
 
     """
     python $TOOL_FOLDER/masst_client.py $input output.tsv \
-    --analog ${params.analog}
+    --analog ${params.analog} \
+    --precursor_tolerance ${params.precursor_tolerance} \
+    --fragment_tolerance ${params.fragment_tolerance} \
+    --cosine ${params.cosine}
     """
 }
 
