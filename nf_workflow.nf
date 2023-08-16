@@ -58,7 +58,13 @@ process searchFASST {
 
 workflow {
     input_parameters_ch = Channel.fromPath(params.input_gnps2_parameters)
-    usi_to_search_ch = prepData(input_parameters_ch)
+
+    if(params.entrymode == "file"){
+        usi_to_search_ch = Channel.fromPath(params.usi_file)
+    }
+    else{
+        usi_to_search_ch = prepData(input_parameters_ch)
+    }
 
     searchFASST(usi_to_search_ch)
 }
