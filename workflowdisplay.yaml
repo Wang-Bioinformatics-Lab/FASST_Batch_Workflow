@@ -8,6 +8,8 @@ Views:
     parameters:
         filename: nf_output/output.tsv
         columns:
+            -   title: "View"
+                data: 
             -   title: "DB USI"
                 data: USI
             -   title: "query_usi"
@@ -20,4 +22,8 @@ Views:
                 data: Cosine
             -   title: "Delta Mass"
                 data: "Delta Mass"
+        columnDefs: '[ {"targets": 0,"data": null,"render": function ( data, type, row, meta ) {
+            return `
+            <a target="_blank" href="https://metabolomics-usi.gnps2.org/dashinterface/?usi1=${encodeURIComponent(row["query_usi"])}&usi2=${encodeURIComponent(row["USI"])}">View Match</a>
+            `;}}]'
             
