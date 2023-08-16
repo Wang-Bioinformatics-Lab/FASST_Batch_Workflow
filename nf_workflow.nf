@@ -3,6 +3,11 @@ nextflow.enable.dsl=2
 
 params.usi_field = "mzspec:GNPS:GNPS-LIBRARY:accession:CCMSLIB00005436077"
 
+// Search Type
+params.entrymode = "file"
+
+params.usi_file = "usi_to_search.tsv"
+
 // Parameters
 params.analog = "No"
 params.precursor_tolerance = "0.02"

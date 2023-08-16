@@ -10,15 +10,25 @@ parameterlist:
     - displayname: Data Selection
       paramtype: section
 
-    # - displayname: Input Data Folder
-    #   paramtype: fileselector
-    #   nf_paramname: input_query
-    #   formplaceholder: Enter the path to data
-    #   formvalue: ""
-    #   targettaskfolder: input_spectra
-    #   optional: false
-    #   selectsinglefile: false
-    #   folderunroll: true
+    - displayname: Search Type
+      paramtype: select
+      nf_paramname: entrymode
+      formvalue: "form"
+      options:
+        - value: "form"
+          display: "form"
+        - value: "file"
+          display: "file"
+
+    - displayname: Input USI Search File
+      paramtype: fileselector
+      nf_paramname: usi_file
+      formplaceholder: Enter the path to data
+      formvalue: ""
+      targettaskfolder: usi_file
+      optional: true
+      selectsinglefile: false
+      folderunroll: true
 
     - displayname: USI Entry
       paramtype: textarea

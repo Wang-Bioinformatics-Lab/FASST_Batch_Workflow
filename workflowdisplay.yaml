@@ -12,6 +12,8 @@ Views:
                 data: USI
             -   title: "query_usi"
                 data: query_usi
+            -   title: "flag"
+                data: flag
             -   title: "Dataset"
                 data: Dataset
             -   title: "Cosine"

@@ -56,7 +56,8 @@ def main():
     # Writing output
     with open(args.output_file, "w") as output_file:
         usi_df = pd.DataFrame()
-        usi_df["usi"] = usi_list  
+        usi_df["usi"] = usi_list
+        usi_df["flag"] = "usi_entry"
 
         usi_df.to_csv(output_file, index=False, sep="\t")
 

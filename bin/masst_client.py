@@ -22,10 +22,14 @@ def query_usi(usi, database, analog=False, precursor_mz_tol=0.02, fragment_mz_to
 
     return r.json()
 
-def masst_query_all(usi_list, database, masst_type, analog=False, precursor_mz_tol=0.02, fragment_mz_tol=0.02, min_cos=0.7):
+def masst_query_all(query_df, database, masst_type, analog=False, precursor_mz_tol=0.02, fragment_mz_tol=0.02, min_cos=0.7):
     output_results_list = []
 
-    for usi in tqdm(usi_list):
+    for query_element in tqdm(query_df.to_dict(orient="records")):
+        print(query_element)
+
+        usi = query_element["usi"]
+
         results_dict = query_usi(usi, database,
             analog=analog, precursor_mz_tol=precursor_mz_tol, 
             fragment_mz_tol=fragment_mz_tol, min_cos=min_cos)
@@ -38,6 +42,9 @@ def masst_query_all(usi_list, database, masst_type, analog=False, precursor_mz_t
         # TODO: Merge with metadata automatically
 
         results_df["query_usi"] = usi
+        if "flag" in query_element:
+            results_df["flag"] = query_element["flag"]
+
         output_results_list.append(results_df)
     
     output_results_df = pd.concat(output_results_list)
@@ -59,7 +66,9 @@ def main():
 
     analog_boolean = args.analog == "Yes"
 
-    output_results_df = masst_query_all(pd.read_csv(args.input_file)["usi"], 
+    query_df = pd.read_csv(args.input_file, sep=None)
+
+    output_results_df = masst_query_all(query_df, 
                                         args.database, args.masst_type, 
                                         analog=analog_boolean)
                                         
