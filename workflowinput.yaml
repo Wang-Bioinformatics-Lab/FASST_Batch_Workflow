@@ -27,7 +27,7 @@ parameterlist:
       formvalue: ""
       targettaskfolder: usi_file
       optional: true
-      selectsinglefile: false
+      selectsinglefile: true
       folderunroll: true
 
     - displayname: USI Entry
