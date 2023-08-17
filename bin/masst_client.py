@@ -18,6 +18,7 @@ def query_usi(usi, database, analog=False, precursor_mz_tol=0.02, fragment_mz_to
     }
 
     r = requests.get(URL, params=params, timeout=50)
+    
     r.raise_for_status()
 
     return r.json()
