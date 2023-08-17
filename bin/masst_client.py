@@ -26,26 +26,28 @@ def masst_query_all(query_df, database, masst_type, analog=False, precursor_mz_t
     output_results_list = []
 
     for query_element in tqdm(query_df.to_dict(orient="records")):
-        print(query_element)
+        try:
 
-        usi = query_element["usi"]
+            usi = query_element["usi"]
 
-        results_dict = query_usi(usi, database,
-            analog=analog, precursor_mz_tol=precursor_mz_tol, 
-            fragment_mz_tol=fragment_mz_tol, min_cos=min_cos)
-        results_df = pd.DataFrame(results_dict["results"])
+            results_dict = query_usi(usi, database,
+                analog=analog, precursor_mz_tol=precursor_mz_tol, 
+                fragment_mz_tol=fragment_mz_tol, min_cos=min_cos)
+            results_df = pd.DataFrame(results_dict["results"])
 
-        # TODO: Support munging of microbemasst results
-        #if masst_type == "microbemasst":
-            # Lets do additionally processing
-        #    print("MICROBEMASST")
-        # TODO: Merge with metadata automatically
+            # TODO: Support munging of microbemasst results
+            #if masst_type == "microbemasst":
+                # Lets do additionally processing
+            #    print("MICROBEMASST")
+            # TODO: Merge with metadata automatically
 
-        results_df["query_usi"] = usi
-        if "flag" in query_element:
-            results_df["flag"] = query_element["flag"]
+            results_df["query_usi"] = usi
+            if "flag" in query_element:
+                results_df["flag"] = query_element["flag"]
 
-        output_results_list.append(results_df)
+            output_results_list.append(results_df)
+        except:
+            pass
     
     output_results_df = pd.concat(output_results_list)
 
