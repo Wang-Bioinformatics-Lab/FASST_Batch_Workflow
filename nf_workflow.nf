@@ -9,6 +9,7 @@ params.entrymode = "file"
 params.usi_file = "usi_to_search.tsv"
 
 // Parameters
+params.database = "gnpsdata_index"
 params.analog = "No"
 params.precursor_tolerance = "0.02"
 params.fragment_tolerance = "0.02"
@@ -52,7 +53,8 @@ process searchFASST {
     --analog ${params.analog} \
     --precursor_tolerance ${params.precursor_tolerance} \
     --fragment_tolerance ${params.fragment_tolerance} \
-    --cosine ${params.cosine}
+    --cosine ${params.cosine} \
+    --database ${params.database}
     """
 }
 

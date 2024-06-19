@@ -1,7 +1,7 @@
 workflowname: fasst_batch_workflow
 workflowdescription: fasst_batch_workflow
 workflowlongdescription: This is a fasst batch nextflow workflow for GNPS2
-workflowversion: "0.1"
+workflowversion: "2014.06.19"
 workflowfile: nf_workflow.nf
 workflowautohide: false
 adminonly: false
@@ -40,6 +40,14 @@ parameterlist:
 
     - displayname: Search Parameters
       paramtype: section
+
+    - displayname: Search Database
+      paramtype: select
+      nf_paramname: database
+      formvalue: "gnpsdata_index"
+      options:
+        - value: "gnpsdata_index"
+          display: "gnpsdata_index"
 
     - displayname: Analog Search
       paramtype: select
