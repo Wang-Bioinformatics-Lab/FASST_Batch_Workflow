@@ -48,8 +48,8 @@ parameterlist:
       options:
         - value: "gnpsdata_index"
           display: "gnpsdata_index"
-        - value: "metabolomics_panrepo_index_latest"
-          display: "metabolomics_panrepo_index_latest"
+        - value: "metabolomicspanrepo_index_latest"
+          display: "metabolomicspanrepo_index_latest"
 
     - displayname: Analog Search
       paramtype: select
