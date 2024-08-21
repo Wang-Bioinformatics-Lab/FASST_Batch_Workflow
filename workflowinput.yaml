@@ -1,7 +1,7 @@
 workflowname: fasst_batch_workflow
 workflowdescription: fasst_batch_workflow
 workflowlongdescription: This is a fasst batch nextflow workflow for GNPS2
-workflowversion: "2014.06.19"
+workflowversion: "2014.08.21"
 workflowfile: nf_workflow.nf
 workflowautohide: false
 adminonly: false
@@ -44,12 +44,16 @@ parameterlist:
     - displayname: Search Database
       paramtype: select
       nf_paramname: database
-      formvalue: "gnpsdata_index"
+      formvalue: "metabolomicspanrepo_index_latest"
       options:
         - value: "gnpsdata_index"
           display: "gnpsdata_index"
         - value: "metabolomicspanrepo_index_latest"
           display: "metabolomicspanrepo_index_latest"
+      options-from-url:
+        url: "https://fasst.gnps2.org/libraries"
+        value-key: "value"
+        display-key: "label"
 
     - displayname: Analog Search
       paramtype: select
@@ -77,7 +81,7 @@ parameterlist:
         - value: "0.02"
           display: "0.02"
 
-    - displayname: Minium Cosine
+    - displayname: Minimum Cosine
       paramtype: select
       nf_paramname: cosine
       formvalue: "0.7"
