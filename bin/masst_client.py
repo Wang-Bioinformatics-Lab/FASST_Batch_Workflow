@@ -73,7 +73,9 @@ def main():
 
     output_results_df = masst_query_all(query_df, 
                                         args.database, args.masst_type, 
-                                        analog=analog_boolean)
+                                        analog=analog_boolean,
+                                        precursor_mz_tol=args.precursor_tolerance,
+                                        fragment_mz_tol=args.fragment_tolerance)
                                         
     output_results_df.to_csv(args.output_file, index=False, sep="\t")
 

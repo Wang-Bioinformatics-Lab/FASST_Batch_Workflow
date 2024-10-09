@@ -1,7 +1,7 @@
 workflowname: fasst_batch_workflow
 workflowdescription: fasst_batch_workflow
 workflowlongdescription: This is a fasst batch nextflow workflow for GNPS2
-workflowversion: "2014.08.21"
+workflowversion: "2014.10.09"
 workflowfile: nf_workflow.nf
 workflowautohide: false
 adminonly: false
