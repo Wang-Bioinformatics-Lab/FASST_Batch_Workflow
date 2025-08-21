@@ -1,3 +1,5 @@
+import os
+import time
 import pandas as pd
 import argparse
 import requests
@@ -23,15 +25,87 @@ def query_usi(usi, database, analog=False, precursor_mz_tol=0.02, fragment_mz_to
 
     return r.json()
 
+def query_api_usi(
+    usi, 
+    database, 
+    analog=False, 
+    precursor_mz_tol=0.02, 
+    fragment_mz_tol=0.02, 
+    min_cos=0.7, 
+    lower_delta=100, 
+    upper_delta=100,
+    blocking=True,
+):
+    host = "https://api.fasst.gnps2.org"
+
+    params = {
+        "usi": usi,
+        "library": database,
+        "analog": "Yes" if analog else "No",
+        "cache": "No",
+        "lower_delta": lower_delta,
+        "upper_delta": upper_delta,
+        "pm_tolerance": precursor_mz_tol,
+        "fragment_tolerance": fragment_mz_tol,
+        "cosine_threshold": min_cos,
+    }
+
+    r = requests.post(os.path.join(host, "search"), json=params, timeout=5)
+    r.raise_for_status()
+
+    task_id = r.json()["id"]
+    
+    params["task_id"] = task_id
+    params["status"] = "PENDING"
+
+    if blocking is False:
+        return params
+    
+    return blocking_for_results(params, host=host)
+
+
+def blocking_for_results(query_parameters_dictionary, host="https://api.fasst.gnps2.org"):
+    task_id = query_parameters_dictionary["task_id"]
+    
+    retries_max = 120
+    current_retries = 0
+    while True:
+        print("WAITING FOR RESULTS", current_retries, task_id)
+        
+        r = requests.get(os.path.join(host, "search/result/{}".format(task_id)), timeout=30)
+
+        try:
+            r.raise_for_status()
+        except:
+            time.sleep(1)
+            current_retries += 1
+
+            continue
+
+
+        # checking if the results are ready
+        if "status" in r.json() and r.json()["status"] == "PENDING":
+            time.sleep(1)
+            current_retries += 1
+
+            if current_retries >= retries_max:
+                raise Exception("Timeout waiting for results from FASST API")
+            
+            continue
+    
+        return r.json()
+
 def masst_query_all(query_df, database, masst_type, analog=False, precursor_mz_tol=0.02, fragment_mz_tol=0.02, min_cos=0.7):
     output_results_list = []
 
     for query_element in tqdm(query_df.to_dict(orient="records")):
         try:
-
             usi = query_element["usi"]
 
-            results_dict = query_usi(usi, database,
+            # results_dict = query_usi(usi, database,
+            #     analog=analog, precursor_mz_tol=precursor_mz_tol, 
+            #     fragment_mz_tol=fragment_mz_tol, min_cos=min_cos)
+            results_dict = query_api_usi(usi, database,
                 analog=analog, precursor_mz_tol=precursor_mz_tol, 
                 fragment_mz_tol=fragment_mz_tol, min_cos=min_cos)
             results_df = pd.DataFrame(results_dict["results"])
@@ -47,7 +121,8 @@ def masst_query_all(query_df, database, masst_type, analog=False, precursor_mz_t
                 results_df["flag"] = query_element["flag"]
 
             output_results_list.append(results_df)
-        except:
+        except Exception as e:
+            print(e)
             pass
     
     output_results_df = pd.concat(output_results_list)

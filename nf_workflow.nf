@@ -38,7 +38,7 @@ process prepData {
 }
 
 process searchFASST {
-    publishDir "./nf_output", mode: 'copy'
+    publishDir "./nf_output", mode: 'copy', pattern: 'output.tsv', saveAs: {"output_${task.index}.tsv"}
 
     conda "$TOOL_FOLDER/conda_env.yml"
 
@@ -63,6 +63,7 @@ workflow {
 
     if(params.entrymode == "file"){
         usi_to_search_ch = Channel.fromPath(params.usi_file)
+        // usi_to_search_ch.view()
     }
     else{
         usi_to_search_ch = prepData(input_parameters_ch)
